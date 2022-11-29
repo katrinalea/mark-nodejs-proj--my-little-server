@@ -19,6 +19,7 @@ app.get("/creation-time", (req, res) => {
     utc: serverStartDate.toUTCString(),
     countedAsHit: false,
   });
+  routes.push("/creation-time")
 });
 
 app.get("/current-time", (req, res) => {
@@ -29,6 +30,7 @@ app.get("/current-time", (req, res) => {
     utc: dateOfRequestHandling.toUTCString(),
     countedAsHit: false,
   });
+  routes.push("/current-time")
 });
 
 app.get("/hits", (req, res) => {
@@ -38,6 +40,7 @@ app.get("/hits", (req, res) => {
     currentTotal: serverHitCount,
     countedAsHit: true,
   });
+  routes.push("/hits")
 });
 
 app.get("/hits-stealth", (req, res) => {
@@ -46,6 +49,7 @@ app.get("/hits-stealth", (req, res) => {
     currentTotal: serverHitCount,
     countedAsHit: false,
   });
+  routes.push("/hits-stealth")
 });
 
 app.get("/ponies", (req, res) => {
@@ -54,6 +58,7 @@ app.get("/ponies", (req, res) => {
     data: ponyData,
     countedAsHit: false,
   });
+  routes.push("/ponies")
 });
 
 app.get("/season-one", (req, res) => {
@@ -61,6 +66,7 @@ app.get("/season-one", (req, res) => {
     countedAsHit: false,
     data: seasonOneEpisodes,
   });
+  routes.push("/season-one")
 });
 
 app.get("/season-one/random", (req, res) => {
@@ -69,10 +75,33 @@ app.get("/season-one/random", (req, res) => {
     countedAsHit: false,
     data: randomEpisode,
   });
+  routes.push("/season-one/random")
 });
 
+
+const routes: string[] = []
+
+app.get("/hello-world", (req, res) => {
+    res.json({
+        "english": "Hello world!",
+        "esperanto": "Saluton mondo!",
+        "hawaiian": "Aloha Honua",
+        "turkish": "Merhaba Dünya!"
+      });
+      routes.push("/hello-world")
+  });
+
+
+app.get("/ponies/random", (req, res) => {
+    res.json(pickRandom(ponyData.members))
+})
+
+app.get("/history", (req, res) => {
+  res.json({routes})
+}) 
+
 // using 4000 by convention, but could be changed
-const PORT_NUMBER = 4000;
+const PORT_NUMBER = 5050;
 
 app.listen(PORT_NUMBER, () => {
   console.log(
